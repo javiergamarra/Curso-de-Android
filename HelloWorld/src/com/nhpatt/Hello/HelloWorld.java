@@ -50,7 +50,7 @@ public class HelloWorld extends Activity implements OnClickListener {
 
 	public void onClick(final View v) {
 		final TextView text = (TextView) findViewById(R.id.text);
-		notas.add((String) text.getText());
+		notas.add(text.getText().toString());
 	}
 
 }
