@@ -1,5 +1,8 @@
 package com.nhpatt.Hello;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class HelloWorld extends Activity implements OnClickListener {
+
+	private final List<String> notas = new ArrayList<String>();
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -44,7 +50,7 @@ public class HelloWorld extends Activity implements OnClickListener {
 
 	public void onClick(final View v) {
 		final TextView text = (TextView) findViewById(R.id.text);
-		text.setText("Otra cosa");
+		notas.add((String) text.getText());
 	}
 
 }
