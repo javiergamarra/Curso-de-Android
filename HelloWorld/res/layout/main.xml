@@ -3,7 +3,7 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/hello" />
+		android:layout_height="wrap_content" android:text="@string/enlace" />
 	<Button android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/hello" />
 </LinearLayout>

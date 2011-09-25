@@ -14,11 +14,11 @@ public class HelloWorld extends Activity {
 		super.onCreate(savedInstanceState);
 		final LinearLayout linearLayout = new LinearLayout(this);
 		final Button button = new Button(this);
-		button.setText("Enlace!");
+		button.setText(R.string.enlace);
 		button.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		final TextView textView = new TextView(this);
-		textView.setText("Hola");
+		textView.setText(R.string.nota);
 		linearLayout.addView(textView, new LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		linearLayout.addView(button, new LayoutParams(LayoutParams.FILL_PARENT,

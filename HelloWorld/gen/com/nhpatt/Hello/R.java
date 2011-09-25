@@ -18,6 +18,8 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040001;
+        public static final int enlace=0x7f040003;
         public static final int hello=0x7f040000;
+        public static final int nota=0x7f040002;
     }
 }
