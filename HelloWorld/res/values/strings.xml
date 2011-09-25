@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="hello">Hello World, HelloWorld!</string>
 	<string name="app_name">AndroidCourse</string>
 	<string name="nota">Nota</string>
 	<string name="enlace">Enlace</string>
+	<string name="salir">Salir</string>
 </resources>

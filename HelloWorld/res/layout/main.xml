@@ -10,4 +10,7 @@
 	<Button android:layout_width="fill_parent" android:id="@+id/enlace"
 		android:singleLine="false" android:layout_height="wrap_content"
 		android:text="@string/nota" />
+	<Button android:layout_width="fill_parent" android:id="@+id/salir"
+		android:singleLine="false" android:layout_height="wrap_content"
+		android:text="@string/salir" />
 </LinearLayout>

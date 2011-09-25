@@ -21,36 +21,22 @@ public class HelloWorld extends Activity implements OnClickListener {
 		setContentView(R.layout.main);
 		final Button button = (Button) findViewById(R.id.enlace);
 		button.setOnClickListener(this);
+		final Button salir = (Button) findViewById(R.id.salir);
+		salir.setOnClickListener(this);
 		System.out.println("Creating activity...");
 	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		System.out.println("Starting an activity...");
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		System.out.println("Resuming an activity...");
-	}
-
-	@Override
-	public void onPause() {
-		super.onStop();
-		System.out.println("Pausing an activity...");
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		System.out.println("Stoping an activity...");
-	}
-
 	public void onClick(final View v) {
-		final TextView text = (TextView) findViewById(R.id.text);
-		notas.add(text.getText().toString());
+		switch (v.getId()) {
+		case R.id.enlace:
+			final TextView text = (TextView) findViewById(R.id.text);
+			notas.add(text.getText().toString());
+			break;
+		case R.id.salir:
+			finish();
+		default:
+			break;
+		}
 	}
 
 }
