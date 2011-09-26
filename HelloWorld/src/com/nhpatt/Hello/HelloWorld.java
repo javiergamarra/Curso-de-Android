@@ -6,6 +6,8 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -96,6 +98,9 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		switch (item.getItemId()) {
 		case Menu.FIRST:
 			Toast.makeText(this, "Menú", Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("http://lexnova.es"));
+			startActivity(intent);
 			return true;
 		default:
 			break;
