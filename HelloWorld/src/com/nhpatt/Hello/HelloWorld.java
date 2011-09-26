@@ -86,7 +86,10 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(0, Menu.FIRST, 0, "blah");
+		MenuItem item = menu.add(0, Menu.FIRST, 0, "Sobre Lex Nova");
+		item.setShortcut('0', 'b');
+		item.setIcon(R.drawable.icon);
+		item = menu.add(0, (Menu.FIRST) + 1, 0, "Preferencias");
 		item.setShortcut('0', 'b');
 		item.setIcon(R.drawable.icon);
 		return true;
@@ -95,11 +98,17 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
+		Intent intent;
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			Toast.makeText(this, "Menú", Toast.LENGTH_SHORT).show();
-			Intent intent = new Intent(Intent.ACTION_VIEW,
+			Toast.makeText(this, "Menú 1", Toast.LENGTH_SHORT).show();
+			intent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("http://lexnova.es"));
+			startActivity(intent);
+			return true;
+		case Menu.FIRST + 1:
+			Toast.makeText(this, "Menú 2", Toast.LENGTH_SHORT).show();
+			intent = new Intent(this, Preferencias.class);
 			startActivity(intent);
 			return true;
 		default:
