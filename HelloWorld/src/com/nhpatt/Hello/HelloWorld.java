@@ -8,10 +8,12 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -38,6 +40,10 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, notas);
 		setListAdapter(adapter);
+
+		ListView lista = (ListView) findViewById(android.R.id.list);
+		registerForContextMenu(lista);
+
 		Log.d(APPLICATION_TAG, "Creating activity...");
 	}
 
@@ -91,6 +97,31 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		case Menu.FIRST:
 			Toast.makeText(this, "Menú", Toast.LENGTH_SHORT).show();
 			return true;
+		default:
+			break;
+		}
+		return false;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, Menu.FIRST, 0, "Eliminar");
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case Menu.FIRST:
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+					.getMenuInfo();
+			String nota = (String) getListAdapter().getItem(info.position);
+			notas.remove(nota);
+			Toast.makeText(this, nota, Toast.LENGTH_SHORT).show();
+			adapter.notifyDataSetChanged();
+			break;
+
 		default:
 			break;
 		}
