@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,8 +24,8 @@ import android.widget.Toast;
 public class HelloWorld extends ListActivity implements OnClickListener {
 
 	private static final String APPLICATION_TAG = "nhpattAPP";
-	private final List<String> notas = new ArrayList<String>();
-	private ArrayAdapter<String> adapter;
+	private final List<Nota> notas = new ArrayList<Nota>();
+	private MyArrayAdapter adapter;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -39,8 +38,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		final Button salir = (Button) findViewById(R.id.salir);
 		salir.setOnClickListener(this);
 
-		adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, notas);
+		adapter = new MyArrayAdapter(this, R.layout.row, notas);
 		setListAdapter(adapter);
 
 		ListView lista = (ListView) findViewById(android.R.id.list);
@@ -55,7 +53,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		case R.id.incluirNota:
 			final TextView text = (TextView) findViewById(R.id.textoNota);
 			String nota = text.getText().toString();
-			notas.add(nota);
+			notas.add(new Nota(nota));
 			Toast.makeText(this, "Añadida la nota: " + nota, Toast.LENGTH_LONG)
 					.show();
 			text.setText("");
@@ -73,7 +71,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			long id) {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("Descripción de nota");
-		dialog.setMessage(notas.get(position));
+		dialog.setMessage(notas.get(position).toString());
 		dialog.setNegativeButton(android.R.string.cancel,
 				new DialogInterface.OnClickListener() {
 					@Override
