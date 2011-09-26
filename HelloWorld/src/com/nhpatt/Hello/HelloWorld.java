@@ -84,4 +84,16 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+		case Menu.FIRST:
+			Toast.makeText(this, "Menú", Toast.LENGTH_SHORT).show();
+			return true;
+		default:
+			break;
+		}
+		return false;
+	}
 }
