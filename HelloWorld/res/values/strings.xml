@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">AndroidCourse</string>
-	<string name="nota">Nota</string>
-	<string name="enlace">Enlace</string>
+	<string name="app_name">Lex Nova Note</string>
+	<string name="nota">Nota:</string>
+	<string name="incluirNota">Añadir Nueva Nota</string>
 	<string name="salir">Salir</string>
 </resources>
