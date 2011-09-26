@@ -8,6 +8,8 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -72,4 +74,14 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 				});
 		dialog.show();
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuItem item = menu.add(0, Menu.FIRST, 0, "blah");
+		item.setShortcut('0', 'b');
+		item.setIcon(R.drawable.icon);
+		return true;
+	}
+
 }
