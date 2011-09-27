@@ -21,6 +21,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nhpatt.model.Nota;
+import com.nhpatt.util.MyArrayAdapter;
+import com.nhpatt.util.Preferencias;
+import com.nhpatt.ws.ParseadorXML;
+import com.nhpatt.ws.TraductorGoogle;
+
 public class HelloWorld extends ListActivity implements OnClickListener {
 
 	private static final String APPLICATION_TAG = "nhpattAPP";
@@ -85,13 +91,12 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(0, Menu.FIRST, 0, "Sobre Lex Nova");
-		item.setShortcut('0', 'b');
 		item.setIcon(R.drawable.icon);
 		item = menu.add(0, (Menu.FIRST) + 1, 0, "Preferencias");
-		item.setShortcut('0', 'b');
 		item.setIcon(R.drawable.icon);
 		item = menu.add(0, (Menu.FIRST) + 2, 0, "XML");
-		item.setShortcut('0', 'b');
+		item.setIcon(R.drawable.icon);
+		item = menu.add(0, (Menu.FIRST) + 3, 0, "Browser");
 		item.setIcon(R.drawable.icon);
 		return true;
 	}
@@ -116,6 +121,10 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			ParseadorXML parseadorXML = new ParseadorXML();
 			parseadorXML.recogerValores();
 			Toast.makeText(this, "Menú 3", Toast.LENGTH_SHORT).show();
+			return true;
+		case Menu.FIRST + 3:
+			intent = new Intent(this, com.nhpatt.util.Browser.class);
+			startActivity(intent);
 			return true;
 		default:
 			break;
