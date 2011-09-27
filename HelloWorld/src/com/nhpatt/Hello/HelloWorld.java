@@ -90,6 +90,9 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		item = menu.add(0, (Menu.FIRST) + 1, 0, "Preferencias");
 		item.setShortcut('0', 'b');
 		item.setIcon(R.drawable.icon);
+		item = menu.add(0, (Menu.FIRST) + 2, 0, "XML");
+		item.setShortcut('0', 'b');
+		item.setIcon(R.drawable.icon);
 		return true;
 	}
 
@@ -109,6 +112,11 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			intent = new Intent(this, Preferencias.class);
 			startActivity(intent);
 			return true;
+		case Menu.FIRST + 2:
+			ParseadorXML parseadorXML = new ParseadorXML();
+			parseadorXML.recogerValores();
+			Toast.makeText(this, "Menú 3", Toast.LENGTH_SHORT).show();
+			return true;
 		default:
 			break;
 		}
@@ -120,18 +128,28 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, Menu.FIRST, 0, "Eliminar");
+		menu.add(0, Menu.FIRST + 1, 0, "Traducir");
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info;
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-					.getMenuInfo();
-			String nota = (String) getListAdapter().getItem(info.position);
+			info = (AdapterContextMenuInfo) item.getMenuInfo();
+			Nota nota = (Nota) getListAdapter().getItem(info.position);
 			notas.remove(nota);
-			Toast.makeText(this, nota, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, nota.toString(), Toast.LENGTH_SHORT).show();
 			adapter.notifyDataSetChanged();
+			break;
+		case Menu.FIRST + 1:
+			info = (AdapterContextMenuInfo) item.getMenuInfo();
+			Nota notaATraducir = (Nota) getListAdapter().getItem(info.position);
+			TraductorGoogle traductorGoogle = new TraductorGoogle();
+			Toast.makeText(
+					this,
+					traductorGoogle.traducir(notaATraducir.toString(), "ES",
+							"en"), Toast.LENGTH_SHORT).show();
 			break;
 
 		default:
