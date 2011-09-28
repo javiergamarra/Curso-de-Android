@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +42,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	private SimpleCursorAdapter adapter;
 	private NotaDataBase dataBase;
 	private Cursor cursor;
+	private ComponentName intentService;
 	public static final String VALOR_URL_DEFECTO = "www.lexnova.es";
 
 	@Override
@@ -106,9 +108,6 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("Descripción de nota");
 
-		// int nameCol = c.getColumnIndex(People.NAME);
-		// String name = c.getString(nameCol);
-
 		dialog.setMessage(cursor.getString(cursor
 				.getColumnIndex(NotaDataBase.DESCRIPCION_COLUMN)));
 		dialog.setNegativeButton(android.R.string.cancel,
@@ -128,6 +127,11 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		menu.add(0, (Menu.FIRST) + 2, 0, "XML");
 		menu.add(0, (Menu.FIRST) + 3, 0, "Browser");
 		menu.add(0, (Menu.FIRST) + 4, 0, "Notificaciones");
+		menu.add(0, (Menu.FIRST) + 5, 0, "Servicio 1");
+		menu.add(0, (Menu.FIRST) + 6, 0, "Parar Servicio 1");
+		menu.add(0, (Menu.FIRST) + 7, 0, "Servicio 2");
+		menu.add(0, (Menu.FIRST) + 8, 0, "Parar Servicio 2");
+		menu.add(0, (Menu.FIRST) + 9, 0, "Content Provider");
 		return true;
 	}
 
@@ -170,13 +174,30 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			notificationManager.notify(1, notification);
 
 			return true;
-		default:
-			break;
+		case Menu.FIRST + 5:
+			service = startService(new Intent(this, Servicio.class));
+			return true;
+		case Menu.FIRST + 6:
+			stopService(new Intent(this, service.getClass()));
+			return true;
+		case Menu.FIRST + 7:
+			intentService = startService(new Intent(this, IntentServicio.class));
+			return true;
+		case Menu.FIRST + 8:
+			stopService(new Intent(this, intentService.getClass()));
+			return true;
+		case Menu.FIRST + 9:
+			Cursor allRows = getContentResolver().query(MyProvider.CONTENT_URI,
+					null, null, null, null);
+			Toast.makeText(this, String.valueOf(allRows.getCount()),
+					Toast.LENGTH_LONG).show();
+			return true;
 		}
 		return false;
 	}
 
 	private ProgressDialog dialog;
+	private ComponentName service;
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,

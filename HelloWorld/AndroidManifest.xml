@@ -13,5 +13,8 @@
 		<activity android:name="com.nhpatt.util.Preferencias"
 			android:label="@string/app_name" />
 		<activity android:name="com.nhpatt.util.Browser"></activity>
+		<service android:name=".Servicio" android:enabled="true"></service>
+		<service android:name=".IntentServicio" android:enabled="true"></service>
+		<provider android:name=".MyProvider" android:authorities="com.nhpatt.Hello.AndroidCourse" />
 	</application>
 </manifest>
