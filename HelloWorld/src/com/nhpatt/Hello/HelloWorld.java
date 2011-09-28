@@ -5,12 +5,14 @@ import android.app.ListActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -174,12 +176,15 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		return false;
 	}
 
+	private ProgressDialog dialog;
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, Menu.FIRST, 0, "Eliminar");
 		menu.add(0, Menu.FIRST + 1, 0, "Traducir");
+		menu.add(0, Menu.FIRST + 2, 0, "Procesar");
 	}
 
 	@Override
@@ -208,10 +213,55 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 							.getColumnIndex(NotaDataBase.DESCRIPCION_COLUMN)),
 							"ES", "en"), Toast.LENGTH_SHORT).show();
 			break;
-
+		case Menu.FIRST + 2:
+			crearDialogoProgreso();
+			new TareaAsincrona().execute("algo");
+			break;
 		default:
 			break;
 		}
 		return false;
 	}
+
+	private void crearDialogoProgreso() {
+		dialog = new ProgressDialog(this);
+		dialog.setMessage("Descargando...");
+		dialog.setTitle("Progreso");
+		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+	}
+
+	private class TareaAsincrona extends AsyncTask<String, Float, Integer> {
+
+		@Override
+		protected void onPreExecute() {
+			dialog.setProgress(0);
+			dialog.setMax(100);
+			dialog.show();
+		}
+
+		@Override
+		protected Integer doInBackground(String... urls) {
+			for (int i = 0; i < 100; i++) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+				}
+
+				publishProgress(i / 100f);
+			}
+			return 100;
+		}
+
+		@Override
+		protected void onProgressUpdate(Float... valores) {
+			int p = Math.round(100 * valores[0]);
+			dialog.setProgress(p);
+		}
+
+		@Override
+		protected void onPostExecute(Integer bytes) {
+			dialog.dismiss();
+		}
+	}
+
 }
