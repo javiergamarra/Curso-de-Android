@@ -1,12 +1,14 @@
 package com.nhpatt.Hello;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import com.nhpatt.model.Nota;
 import com.nhpatt.util.MyArrayAdapter;
+import com.nhpatt.util.NotaDataBase;
 import com.nhpatt.util.Preferencias;
 import com.nhpatt.ws.ParseadorXML;
 import com.nhpatt.ws.TraductorGoogle;
@@ -32,6 +35,8 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	private static final String APPLICATION_TAG = "nhpattAPP";
 	private final List<Nota> notas = new ArrayList<Nota>();
 	private MyArrayAdapter adapter;
+	private NotaDataBase dataBase;
+	private Cursor cursor;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -46,6 +51,25 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 
 		adapter = new MyArrayAdapter(this, R.layout.row, notas);
 		setListAdapter(adapter);
+
+		dataBase = new NotaDataBase(this);
+		dataBase.open();
+
+		cursor = dataBase.findAll();
+		startManagingCursor(cursor);
+		cursor.requery();
+		notas.clear();
+		if (cursor.moveToFirst()) {
+			do {
+				String task = cursor.getString(cursor
+						.getColumnIndex(NotaDataBase.KEY_TASK));
+				long created = cursor.getLong(cursor
+						.getColumnIndex(NotaDataBase.KEY_CREATION_DATE));
+				Nota newItem = new Nota(task, new Date(created));
+				notas.add(newItem);
+			} while (cursor.moveToNext());
+		}
+		adapter.notifyDataSetChanged();
 
 		ListView lista = (ListView) findViewById(android.R.id.list);
 		registerForContextMenu(lista);
@@ -62,6 +86,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			notas.add(new Nota(nota));
 			Toast.makeText(this, "Añadida la nota: " + nota, Toast.LENGTH_LONG)
 					.show();
+			dataBase.insertar(notas.get(notas.size() - 1));
 			text.setText("");
 			adapter.notifyDataSetChanged();
 			break;

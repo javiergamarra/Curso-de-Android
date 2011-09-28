@@ -5,19 +5,24 @@ import java.util.Date;
 
 public class Nota {
 
-	private String nota;
+	private String descripcion;
 	private Date fechaCreacion = Calendar.getInstance().getTime();
 
+	public Nota(String nota, Date date) {
+		this.descripcion = nota;
+		this.fechaCreacion = date;
+	}
+
 	public Nota(String nota) {
-		this.nota = nota;
+		this.descripcion = nota;
 	}
 
 	public String getNota() {
-		return nota;
+		return descripcion;
 	}
 
 	public void setNota(String nota) {
-		this.nota = nota;
+		this.descripcion = nota;
 	}
 
 	public Date getFechaCreacion() {
@@ -30,6 +35,6 @@ public class Nota {
 
 	@Override
 	public String toString() {
-		return nota;
+		return descripcion;
 	}
 }
