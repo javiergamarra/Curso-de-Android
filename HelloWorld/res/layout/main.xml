@@ -3,8 +3,8 @@
 	android:orientation="vertical" android:layout_width="wrap_content"
 	android:layout_height="wrap_content" android:padding="10dip">
 	<TextView android:layout_width="fill_parent" android:padding="10dip"
-		android:textColor="@color/green" android:layout_height="wrap_content"
-		android:text="@string/nota" />
+		android:id="@+id/informacionNota" android:textColor="@color/green"
+		android:layout_height="wrap_content" android:text="@string/nota" />
 	<EditText android:layout_width="fill_parent" android:id="@+id/textoNota"
 		android:layout_height="wrap_content" android:layout_gravity="top"
 		android:singleLine="true" />

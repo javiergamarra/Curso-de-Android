@@ -12,9 +12,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -36,16 +38,20 @@ import com.nhpatt.ws.TraductorGoogle;
 
 public class HelloWorld extends ListActivity implements OnClickListener {
 
+	public static final String VALOR_URL = "VALOR_URL";
 	private static final String APPLICATION_TAG = "nhpattAPP";
 	private final List<Nota> notas = new ArrayList<Nota>();
 	private MyArrayAdapter adapter;
 	private NotaDataBase dataBase;
 	private Cursor cursor;
+	public static final String VALOR_URL_DEFECTO = "www.lexnova.es";
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		// guardarValorURL();
 
 		final Button button = (Button) findViewById(R.id.incluirNota);
 		button.setOnClickListener(this);
@@ -79,6 +85,14 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		registerForContextMenu(lista);
 
 		Log.d(APPLICATION_TAG, "Creating activity...");
+	}
+
+	private void guardarValorURL() {
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString(VALOR_URL, "www.google.es");
+		editor.commit();
 	}
 
 	@Override

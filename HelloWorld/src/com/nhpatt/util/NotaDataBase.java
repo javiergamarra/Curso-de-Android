@@ -26,11 +26,11 @@ public class NotaDataBase {
 	public static final String KEY_TASK = "task";
 	public static final String KEY_CREATION_DATE = "creation_date";
 
-	private final toDoDBOpenHelper dbHelper;
+	private final NotaDBOpenHelper dbHelper;
 
 	public NotaDataBase(Context _context) {
 		this.context = _context;
-		dbHelper = new toDoDBOpenHelper(context, DATABASE_NAME, null,
+		dbHelper = new NotaDBOpenHelper(context, DATABASE_NAME, null,
 				DATABASE_VERSION);
 	}
 
@@ -90,31 +90,30 @@ public class NotaDataBase {
 		db.close();
 	}
 
-	private static class toDoDBOpenHelper extends SQLiteOpenHelper {
-		public toDoDBOpenHelper(Context context, String name,
+	private static class NotaDBOpenHelper extends SQLiteOpenHelper {
+		public NotaDBOpenHelper(Context context, String name,
 				CursorFactory factory, int version) {
 			super(context, name, factory, version);
 		}
 
-		// SQL Statement to create a new database.
 		private static final String DATABASE_CREATE = "create table "
 				+ DATABASE_TABLE + " (" + KEY_ID
 				+ " integer primary key autoincrement, " + KEY_TASK
 				+ " text not null, " + KEY_CREATION_DATE + " long);";
 
 		@Override
-		public void onCreate(SQLiteDatabase _db) {
-			_db.execSQL(DATABASE_CREATE);
+		public void onCreate(SQLiteDatabase db) {
+			db.execSQL(DATABASE_CREATE);
 		}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase _db, int _oldVersion,
+		public void onUpgrade(SQLiteDatabase db, int _oldVersion,
 				int _newVersion) {
 			Log.w("TaskDBAdapter", "Upgrading from version " + _oldVersion
 					+ " to " + _newVersion
 					+ ", which will destroy all old data");
-			_db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
-			onCreate(_db);
+			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+			onCreate(db);
 		}
 	}
 
