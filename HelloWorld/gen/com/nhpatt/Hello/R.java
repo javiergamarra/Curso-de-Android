@@ -17,14 +17,13 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int bottomText=0x7f090006;
+        public static final int bottomText=0x7f090005;
         public static final int browser=0x7f090000;
-        public static final int incluirNota=0x7f090003;
-        public static final int informacionNota=0x7f090001;
-        public static final int salir=0x7f090004;
-        public static final int textoNota=0x7f090002;
-        public static final int topText=0x7f090005;
-        public static final int traductor=0x7f090007;
+        public static final int incluirNota=0x7f090002;
+        public static final int salir=0x7f090003;
+        public static final int textoNota=0x7f090001;
+        public static final int topText=0x7f090004;
+        public static final int traductor=0x7f090006;
     }
     public static final class layout {
         public static final int browser=0x7f030000;

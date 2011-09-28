@@ -23,7 +23,7 @@ public class NotaDataBase {
 	private final Context context;
 
 	public static final String KEY_ID = "_id";
-	public static final String KEY_TASK = "task";
+	public static final String DESCRIPCION_COLUMN = "task";
 	public static final String KEY_CREATION_DATE = "creation_date";
 
 	private final NotaDBOpenHelper dbHelper;
@@ -36,7 +36,7 @@ public class NotaDataBase {
 
 	public long insertar(Nota nota) {
 		ContentValues valoresNota = new ContentValues();
-		valoresNota.put(KEY_TASK, nota.getNota());
+		valoresNota.put(DESCRIPCION_COLUMN, nota.getDescripcion());
 		valoresNota.put(KEY_CREATION_DATE, nota.getFechaCreacion().getTime());
 		return db.insert(DATABASE_TABLE, null, valoresNota);
 	}
@@ -47,18 +47,20 @@ public class NotaDataBase {
 
 	public boolean actualizarNota(long id, String nuevaDescripcion) {
 		ContentValues newValue = new ContentValues();
-		newValue.put(KEY_TASK, nuevaDescripcion);
+		newValue.put(DESCRIPCION_COLUMN, nuevaDescripcion);
 		return db.update(DATABASE_TABLE, newValue, KEY_ID + "=" + id, null) > 0;
 	}
 
 	public Cursor findAll() {
-		return db.query(DATABASE_TABLE, new String[] { KEY_ID, KEY_TASK,
-				KEY_CREATION_DATE }, null, null, null, null, null);
+		return db.query(DATABASE_TABLE, new String[] { KEY_ID,
+				DESCRIPCION_COLUMN, KEY_CREATION_DATE }, null, null, null,
+				null, null);
 	}
 
 	public Cursor findById(long id) throws SQLException {
 		Cursor result = db.query(true, DATABASE_TABLE, new String[] { KEY_ID,
-				KEY_TASK }, KEY_ID + "=" + id, null, null, null, null, null);
+				DESCRIPCION_COLUMN }, KEY_ID + "=" + id, null, null, null,
+				null, null);
 		if ((result.getCount() == 0) || !result.moveToFirst()) {
 			throw new SQLException("No to do items found for row: " + id);
 		}
@@ -67,14 +69,17 @@ public class NotaDataBase {
 
 	public Nota getNotaPorId(long id) throws SQLException {
 		Cursor cursor = db.query(true, DATABASE_TABLE, new String[] { KEY_ID,
-				KEY_TASK }, KEY_ID + "=" + id, null, null, null, null, null);
+				DESCRIPCION_COLUMN }, KEY_ID + "=" + id, null, null, null,
+				null, null);
 		if ((cursor.getCount() == 0) || !cursor.moveToFirst()) {
 			throw new SQLException("No to do item found for row: " + id);
 		}
-		String descripcion = cursor.getString(cursor.getColumnIndex(KEY_TASK));
+		String descripcion = cursor.getString(cursor
+				.getColumnIndex(DESCRIPCION_COLUMN));
 		long fechaCreacion = cursor.getLong(cursor
 				.getColumnIndex(KEY_CREATION_DATE));
-		Nota nota = new Nota(descripcion, new Date(fechaCreacion));
+		Nota nota = new Nota(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+				descripcion, new Date(fechaCreacion));
 		return nota;
 	}
 
@@ -98,7 +103,7 @@ public class NotaDataBase {
 
 		private static final String DATABASE_CREATE = "create table "
 				+ DATABASE_TABLE + " (" + KEY_ID
-				+ " integer primary key autoincrement, " + KEY_TASK
+				+ " integer primary key autoincrement, " + DESCRIPCION_COLUMN
 				+ " text not null, " + KEY_CREATION_DATE + " long);";
 
 		@Override

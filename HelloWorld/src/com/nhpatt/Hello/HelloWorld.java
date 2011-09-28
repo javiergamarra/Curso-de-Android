@@ -1,9 +1,5 @@
 package com.nhpatt.Hello;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.Notification;
@@ -26,11 +22,11 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nhpatt.model.Nota;
-import com.nhpatt.util.MyArrayAdapter;
 import com.nhpatt.util.NotaDataBase;
 import com.nhpatt.util.Preferencias;
 import com.nhpatt.ws.ParseadorXML;
@@ -40,8 +36,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 
 	public static final String VALOR_URL = "VALOR_URL";
 	private static final String APPLICATION_TAG = "nhpattAPP";
-	private final List<Nota> notas = new ArrayList<Nota>();
-	private MyArrayAdapter adapter;
+	private SimpleCursorAdapter adapter;
 	private NotaDataBase dataBase;
 	private Cursor cursor;
 	public static final String VALOR_URL_DEFECTO = "www.lexnova.es";
@@ -51,7 +46,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// guardarValorURL();
+		guardarValorURL();
 
 		final Button button = (Button) findViewById(R.id.incluirNota);
 		button.setOnClickListener(this);
@@ -59,27 +54,16 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		final Button salir = (Button) findViewById(R.id.salir);
 		salir.setOnClickListener(this);
 
-		adapter = new MyArrayAdapter(this, R.layout.row, notas);
-		setListAdapter(adapter);
-
 		dataBase = new NotaDataBase(this);
 		dataBase.open();
-
 		cursor = dataBase.findAll();
 		startManagingCursor(cursor);
-		cursor.requery();
-		notas.clear();
-		if (cursor.moveToFirst()) {
-			do {
-				String task = cursor.getString(cursor
-						.getColumnIndex(NotaDataBase.KEY_TASK));
-				long created = cursor.getLong(cursor
-						.getColumnIndex(NotaDataBase.KEY_CREATION_DATE));
-				Nota newItem = new Nota(task, new Date(created));
-				notas.add(newItem);
-			} while (cursor.moveToNext());
-		}
-		adapter.notifyDataSetChanged();
+
+		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor,
+				new String[] { NotaDataBase.DESCRIPCION_COLUMN,
+						NotaDataBase.KEY_CREATION_DATE }, new int[] {
+						R.id.bottomText, R.id.topText });
+		setListAdapter(adapter);
 
 		ListView lista = (ListView) findViewById(android.R.id.list);
 		registerForContextMenu(lista);
@@ -100,13 +84,12 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.incluirNota:
 			final TextView text = (TextView) findViewById(R.id.textoNota);
-			String nota = text.getText().toString();
-			notas.add(new Nota(nota));
+			Nota nota = new Nota(text.getText().toString());
+			dataBase.insertar(nota);
+			cursor.requery();
 			Toast.makeText(this, "Añadida la nota: " + nota, Toast.LENGTH_LONG)
 					.show();
-			dataBase.insertar(notas.get(notas.size() - 1));
 			text.setText("");
-			adapter.notifyDataSetChanged();
 			break;
 		case R.id.salir:
 			finish();
@@ -120,7 +103,12 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			long id) {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("Descripción de nota");
-		dialog.setMessage(notas.get(position).toString());
+
+		// int nameCol = c.getColumnIndex(People.NAME);
+		// String name = c.getString(nameCol);
+
+		dialog.setMessage(cursor.getString(cursor
+				.getColumnIndex(NotaDataBase.DESCRIPCION_COLUMN)));
 		dialog.setNegativeButton(android.R.string.cancel,
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -133,16 +121,11 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(0, Menu.FIRST, 0, "Sobre Lex Nova");
-		item.setIcon(R.drawable.icon);
-		item = menu.add(0, (Menu.FIRST) + 1, 0, "Preferencias");
-		item.setIcon(R.drawable.icon);
-		item = menu.add(0, (Menu.FIRST) + 2, 0, "XML");
-		item.setIcon(R.drawable.icon);
-		item = menu.add(0, (Menu.FIRST) + 3, 0, "Browser");
-		item.setIcon(R.drawable.icon);
-		item = menu.add(0, (Menu.FIRST) + 4, 0, "Notificaciones");
-		item.setIcon(R.drawable.icon);
+		menu.add(0, Menu.FIRST, 0, "Sobre Lex Nova");
+		menu.add(0, (Menu.FIRST) + 1, 0, "Preferencias");
+		menu.add(0, (Menu.FIRST) + 2, 0, "XML");
+		menu.add(0, (Menu.FIRST) + 3, 0, "Browser");
+		menu.add(0, (Menu.FIRST) + 4, 0, "Notificaciones");
 		return true;
 	}
 
@@ -152,20 +135,17 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		Intent intent;
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			Toast.makeText(this, "Menú 1", Toast.LENGTH_SHORT).show();
 			intent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("http://lexnova.es"));
 			startActivity(intent);
 			return true;
 		case Menu.FIRST + 1:
-			Toast.makeText(this, "Menú 2", Toast.LENGTH_SHORT).show();
 			intent = new Intent(this, Preferencias.class);
 			startActivity(intent);
 			return true;
 		case Menu.FIRST + 2:
 			ParseadorXML parseadorXML = new ParseadorXML();
 			parseadorXML.recogerValores();
-			Toast.makeText(this, "Menú 3", Toast.LENGTH_SHORT).show();
 			return true;
 		case Menu.FIRST + 3:
 			intent = new Intent(this, com.nhpatt.util.Browser.class);
@@ -205,22 +185,28 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info;
+		Cursor cursor;
 		switch (item.getItemId()) {
 		case Menu.FIRST:
 			info = (AdapterContextMenuInfo) item.getMenuInfo();
-			Nota nota = (Nota) getListAdapter().getItem(info.position);
-			notas.remove(nota);
-			Toast.makeText(this, nota.toString(), Toast.LENGTH_SHORT).show();
-			adapter.notifyDataSetChanged();
+			cursor = (Cursor) getListAdapter().getItem(info.position);
+			dataBase.eliminarNota(cursor.getInt(cursor
+					.getColumnIndex(NotaDataBase.KEY_ID)));
+			cursor.requery();
+			Toast.makeText(
+					this,
+					cursor.getString(cursor
+							.getColumnIndex(NotaDataBase.DESCRIPCION_COLUMN)),
+					Toast.LENGTH_SHORT).show();
 			break;
 		case Menu.FIRST + 1:
 			info = (AdapterContextMenuInfo) item.getMenuInfo();
-			Nota notaATraducir = (Nota) getListAdapter().getItem(info.position);
-			TraductorGoogle traductorGoogle = new TraductorGoogle();
+			cursor = (Cursor) getListAdapter().getItem(info.position);
 			Toast.makeText(
 					this,
-					traductorGoogle.traducir(notaATraducir.toString(), "ES",
-							"en"), Toast.LENGTH_SHORT).show();
+					TraductorGoogle.traducir(cursor.getString(cursor
+							.getColumnIndex(NotaDataBase.DESCRIPCION_COLUMN)),
+							"ES", "en"), Toast.LENGTH_SHORT).show();
 			break;
 
 		default:
