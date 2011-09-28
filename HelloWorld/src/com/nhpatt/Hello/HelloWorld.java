@@ -6,6 +6,10 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -123,6 +127,8 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		item.setIcon(R.drawable.icon);
 		item = menu.add(0, (Menu.FIRST) + 3, 0, "Browser");
 		item.setIcon(R.drawable.icon);
+		item = menu.add(0, (Menu.FIRST) + 4, 0, "Notificaciones");
+		item.setIcon(R.drawable.icon);
 		return true;
 	}
 
@@ -150,6 +156,23 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		case Menu.FIRST + 3:
 			intent = new Intent(this, com.nhpatt.util.Browser.class);
 			startActivity(intent);
+			return true;
+		case Menu.FIRST + 4:
+			Notification notification = new Notification(R.drawable.icon,
+					"Notification corta", System.currentTimeMillis());
+			intent = new Intent(this, Preferencias.class);
+			PendingIntent launchIntent = PendingIntent.getActivity(
+					getApplicationContext(), 0, intent, 0);
+			notification.flags = notification.flags
+					| Notification.FLAG_ONGOING_EVENT
+					| Notification.DEFAULT_VIBRATE;
+
+			notification.setLatestEventInfo(getApplicationContext(), "Titulo",
+					"Texto largo", launchIntent);
+
+			NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.notify(1, notification);
+
 			return true;
 		default:
 			break;
