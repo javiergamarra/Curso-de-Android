@@ -66,7 +66,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor,
 				new String[] { NotaDataBase.DESCRIPCION_COLUMN,
 						NotaDataBase.KEY_CREATION_DATE }, new int[] {
-						R.id.bottomText, R.id.topText });
+						R.id.topText, R.id.bottomText });
 		setListAdapter(adapter);
 
 		ListView lista = (ListView) findViewById(android.R.id.list);
