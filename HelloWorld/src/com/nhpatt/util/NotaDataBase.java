@@ -16,15 +16,15 @@ import com.nhpatt.model.Nota;
 
 public class NotaDataBase {
 
-	private static final String DATABASE_NAME = "todoList.db";
-	private static final String DATABASE_TABLE = "todoItems";
-	private static final int DATABASE_VERSION = 1;
 	private SQLiteDatabase db;
 	private final Context context;
 
 	public static final String KEY_ID = "_id";
 	public static final String DESCRIPCION_COLUMN = "task";
 	public static final String KEY_CREATION_DATE = "creation_date";
+	public static final String DATABASE_NAME = "todoList.db";
+	public static final String DATABASE_TABLE = "todoItems";
+	public static final int DATABASE_VERSION = 1;
 
 	private final NotaDBOpenHelper dbHelper;
 
@@ -89,6 +89,10 @@ public class NotaDataBase {
 		} catch (SQLiteException ex) {
 			db = dbHelper.getReadableDatabase();
 		}
+	}
+
+	public SQLiteDatabase getDb() {
+		return db;
 	}
 
 	public void close() {
