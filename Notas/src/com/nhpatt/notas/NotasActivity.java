@@ -21,19 +21,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nhpatt.modelos.Nota;
+
 public class NotasActivity extends ListActivity {
 
 	private static final String URL_PRUEBA = "http://www.nhpatt.com";
 	private static final int ACTIVIDAD_NUEVA_NOTA = 0;
-	private final List<String> notas = new ArrayList<String>();
-	private ArrayAdapter<String> arrayAdapter;
+	private final List<Nota> notas = new ArrayList<Nota>();
+	private ArrayAdapter<Nota> arrayAdapter;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		arrayAdapter = new ArrayAdapter<String>(this,
+		arrayAdapter = new ArrayAdapter<Nota>(this,
 				android.R.layout.simple_list_item_1, notas);
 		setListAdapter(arrayAdapter);
 
@@ -109,11 +111,11 @@ public class NotasActivity extends ListActivity {
 		switch (requestCode) {
 		case ACTIVIDAD_NUEVA_NOTA:
 			if (Activity.RESULT_OK == resultCode) {
-				final String textoNota = data
-						.getStringExtra(InsertarNotaActivity.NOTA);
-				notas.add(textoNota);
+				final Nota nota = (Nota) data
+						.getSerializableExtra(InsertarNotaActivity.NOTA);
+				notas.add(nota);
 				arrayAdapter.notifyDataSetChanged();
-				Toast.makeText(this, "Nota insertada: " + textoNota,
+				Toast.makeText(this, "Nota insertada: " + nota.toString(),
 						Toast.LENGTH_SHORT).show();
 			}
 			break;

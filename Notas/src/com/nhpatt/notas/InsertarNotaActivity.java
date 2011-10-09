@@ -8,6 +8,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.nhpatt.modelos.Nota;
+
 public class InsertarNotaActivity extends Activity implements OnClickListener {
 
 	public static final String NOTA = "NOTA";
@@ -24,7 +26,7 @@ public class InsertarNotaActivity extends Activity implements OnClickListener {
 	public void onClick(final View v) {
 		final EditText campoNota = (EditText) findViewById(R.id.campoNuevaNota);
 		final Intent intent = new Intent();
-		intent.putExtra(NOTA, campoNota.getText().toString());
+		intent.putExtra(NOTA, new Nota(campoNota.getText().toString()));
 		setResult(Activity.RESULT_OK, intent);
 		finish();
 	}
