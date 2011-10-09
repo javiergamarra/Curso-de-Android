@@ -1,7 +1,9 @@
 
-Ejercicios complementarios al curso de Android (30 horas)
+Ejercicios complementarios al curso de Android (30 horas).
 
-Una vez preparado el entorno
+No tienen mucho sentido sin las diapositivas delante...
+
+Una vez preparado el entorno:
  0 - Crear un proyecto de prueba llamado 'Notas'
  1 - Loguear los cambios de estado de la actividad (Log.e)
  2 - Crear una vista programáticamente, con un TextView y un Botón (alineación vertical, layout params...)
@@ -46,3 +48,5 @@ Una vez preparado el entorno
 41 - Tests con Robotium
 42 - Ejemplos de servicios
 43 - Ejemplo de Content Providers y Search
+
+--> Si hay algún error, sugerencia o comentario, comenta alguno de los commits, abre un issue o envíame un correo :)
