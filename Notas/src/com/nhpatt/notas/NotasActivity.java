@@ -22,7 +22,8 @@ import android.widget.Toast;
 
 import com.nhpatt.modelos.Nota;
 import com.nhpatt.util.NotaAdapter;
-import com.nhpatt.util.TraductorGoogle;
+import com.nhpatt.ws.ParseadorXML;
+import com.nhpatt.ws.TraductorGoogle;
 
 public class NotasActivity extends ListActivity {
 
@@ -73,7 +74,15 @@ public class NotasActivity extends ListActivity {
 					InsertarNotaActivity.class);
 			startActivityForResult(actividadNuevaNota, ACTIVIDAD_NUEVA_NOTA);
 			return true;
+		case R.id.menuProcesarBlog:
+			// FIXME Otro candidato a tarea a hilo
+			for (final String titulo : ParseadorXML.recogerTitulosBlog()) {
+				notas.add(new Nota(titulo));
+			}
+			notaAdapter.notifyDataSetChanged();
+			return true;
 		}
+
 		return false;
 	}
 

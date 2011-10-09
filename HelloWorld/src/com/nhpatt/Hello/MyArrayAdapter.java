@@ -9,24 +9,30 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.nhpatt.model.Nota;
+
 public class MyArrayAdapter extends ArrayAdapter<Nota> {
 
-	public MyArrayAdapter(Context context, int resource, List<Nota> objects) {
+	public MyArrayAdapter(final Context context, final int resource,
+			final List<Nota> objects) {
 		super(context, resource, objects);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView,
+			final ViewGroup parent) {
 		if (convertView == null) {
-			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
-					Context.LAYOUT_INFLATER_SERVICE);
+			final LayoutInflater vi = (LayoutInflater) getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = vi.inflate(R.layout.row, null);
 		}
-		Nota nota = getItem(position);
-		TextView fecha = (TextView) convertView.findViewById(R.id.bottomText);
+		final Nota nota = getItem(position);
+		final TextView fecha = (TextView) convertView
+				.findViewById(R.id.bottomText);
 		fecha.setText(nota.getFechaCreacion().toGMTString());
-		TextView textoNota = (TextView) convertView.findViewById(R.id.topText);
-		textoNota.setText(nota.getNota());
+		final TextView textoNota = (TextView) convertView
+				.findViewById(R.id.topText);
+		textoNota.setText(nota.getDescripcion());
 
 		return convertView;
 	}

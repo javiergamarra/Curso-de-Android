@@ -7,6 +7,8 @@
 		android:icon="@android:drawable/ic_menu_info_details" />
 	<item android:id="@+id/menuPreferencias" android:title="@string/preferencias"
 		android:icon="@android:drawable/ic_menu_manage" />
+	<item android:id="@+id/menuProcesarBlog" android:title="@string/procesarBlog"
+		android:icon="@android:drawable/ic_menu_view" />
 	<item android:id="@+id/menuSalir" android:title="@string/salir"
 		android:icon="@android:drawable/ic_menu_close_clear_cancel" />
 </menu>

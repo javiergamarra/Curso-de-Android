@@ -23,7 +23,8 @@ public final class R {
         public static final int menuConocerMas=0x7f070008;
         public static final int menuNuevaNota=0x7f070007;
         public static final int menuPreferencias=0x7f070009;
-        public static final int menuSalir=0x7f07000a;
+        public static final int menuProcesarBlog=0x7f07000a;
+        public static final int menuSalir=0x7f07000b;
         public static final int nuevaNota=0x7f070004;
         public static final int textoInsertarNota=0x7f070002;
         public static final int topText=0x7f070000;
@@ -43,11 +44,12 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int bienvenida=0x7f050001;
         public static final int conocerMas=0x7f050004;
-        public static final int eliminarNota=0x7f050006;
+        public static final int eliminarNota=0x7f050007;
         public static final int insertarNota=0x7f050002;
         public static final int nuevaNota=0x7f050003;
         public static final int preferencias=0x7f050005;
-        public static final int salir=0x7f050008;
-        public static final int traducirNota=0x7f050007;
+        public static final int procesarBlog=0x7f050006;
+        public static final int salir=0x7f050009;
+        public static final int traducirNota=0x7f050008;
     }
 }
