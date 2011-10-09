@@ -43,10 +43,17 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		final MenuItem item = menu
-				.add(0, ConocerMas, Menu.FIRST, "Conocer más");
+		final MenuItem item = menu.add(0, ConocerMas, Menu.FIRST,
+				R.string.conocerMas);
 		item.setShortcut('b', '1');
 		item.setIcon(R.drawable.icon);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		Toast.makeText(this, "Ha seleccionado un menú", Toast.LENGTH_SHORT)
+				.show();
 		return true;
 	}
 
