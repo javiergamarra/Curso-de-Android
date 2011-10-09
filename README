@@ -20,3 +20,4 @@ Una vez preparado el entorno
 15 - Crear un menú contextual en la lista que elimine las notas insertadas
 16 - Definir los menús en XML
 17 - Hacer que el menú llame al navegador con una URL
+18 - Crear una nueva actividad y llamarla desde el menú

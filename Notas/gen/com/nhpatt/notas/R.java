@@ -21,12 +21,14 @@ public final class R {
         public static final int eliminarNota=0x7f070004;
         public static final int incluirNuevaNota=0x7f070001;
         public static final int nuevaNota=0x7f070000;
+        public static final int preferencias=0x7f070006;
         public static final int salir=0x7f070002;
         public static final int textoInsertarNota=0x7f070003;
     }
     public static final class layout {
         public static final int main=0x7f030000;
         public static final int nuevanota=0x7f030001;
+        public static final int preferencias=0x7f030002;
     }
     public static final class menu {
         public static final int contextmenu=0x7f060000;
@@ -35,10 +37,11 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f050000;
         public static final int conocerMas=0x7f050004;
-        public static final int eliminarNota=0x7f050005;
+        public static final int eliminarNota=0x7f050006;
         public static final int insertarNota=0x7f050001;
         public static final int notaInsertada=0x7f050003;
         public static final int nuevaNota=0x7f050002;
-        public static final int salir=0x7f050006;
+        public static final int preferencias=0x7f050005;
+        public static final int salir=0x7f050007;
     }
 }

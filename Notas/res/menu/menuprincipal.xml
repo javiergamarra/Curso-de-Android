@@ -2,5 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/conocermas" android:title="@string/conocerMas"
 		android:numericShortcut="2" android:alphabeticShortcut="b"
-		android:icon="@drawable/icon" />
+		android:icon="@android:drawable/ic_menu_info_details" />
+	<item android:id="@+id/preferencias" android:title="@string/preferencias"
+		android:icon="@android:drawable/ic_menu_help" />
 </menu>

@@ -65,6 +65,10 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 					Uri.parse(URL_PRUEBA));
 			startActivity(intentBrowser);
 			return true;
+		case R.id.preferencias:
+			final Intent actividadPreferencias = new Intent(this,
+					PreferenciasActivity.class);
+			startActivity(actividadPreferencias);
 		}
 		return false;
 	}
