@@ -7,7 +7,7 @@
 		android:text="@string/insertarNota" android:textSize="20dip" />
 	<EditText android:layout_height="wrap_content"
 		android:layout_below="@id/textoInsertarNota" android:layout_width="fill_parent"
-		android:id="@+id/campoNuevaNota" />
+		android:nextFocusRight="@+id/nuevaNota" android:id="@+id/campoNuevaNota" />
 	<Button android:layout_height="wrap_content" android:text="@string/nuevaNota"
 		android:drawableRight="@android:drawable/ic_input_add" android:id="@+id/nuevaNota"
 		android:layout_below="@id/campoNuevaNota" android:layout_width="fill_parent" />

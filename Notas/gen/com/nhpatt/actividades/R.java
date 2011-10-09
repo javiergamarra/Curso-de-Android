@@ -24,14 +24,14 @@ public final class R {
         public static final int bienvenida=0x7f0a0003;
         public static final int bottomText=0x7f0a0002;
         public static final int browser=0x7f0a0000;
-        public static final int campoNuevaNota=0x7f0a0005;
+        public static final int campoNuevaNota=0x7f0a0006;
         public static final int eliminarNota=0x7f0a0008;
         public static final int menuConocerMas=0x7f0a000a;
         public static final int menuNuevaNota=0x7f0a0009;
         public static final int menuPreferencias=0x7f0a000b;
         public static final int menuProcesarBlog=0x7f0a000c;
         public static final int menuSalir=0x7f0a000d;
-        public static final int nuevaNota=0x7f0a0006;
+        public static final int nuevaNota=0x7f0a0005;
         public static final int textoInsertarNota=0x7f0a0004;
         public static final int topText=0x7f0a0001;
         public static final int traducirNota=0x7f0a0007;
