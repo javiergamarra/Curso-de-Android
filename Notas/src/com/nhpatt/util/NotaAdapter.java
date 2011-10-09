@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.nhpatt.actividades.R;
 import com.nhpatt.modelos.Nota;
-import com.nhpatt.notas.R;
 
 public class NotaAdapter extends ArrayAdapter<Nota> {
 

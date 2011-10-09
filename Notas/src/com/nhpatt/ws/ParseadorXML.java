@@ -22,7 +22,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.nhpatt.notas.NotasActivity;
+import com.nhpatt.actividades.NotasActivity;
 
 public class ParseadorXML extends AsyncTask<Void, Integer, Void> {
 
@@ -32,11 +32,11 @@ public class ParseadorXML extends AsyncTask<Void, Integer, Void> {
 	private final NotasActivity actividad;
 	private final ProgressDialog dialog;
 
-	public ParseadorXML(final Context context, final NotasActivity actividad) {
-		dialog = new ProgressDialog(context);
+	public ParseadorXML(final NotasActivity actividad) {
+		dialog = new ProgressDialog((Context) actividad);
 		dialog.setProgress(0);
-		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setMax(100);
+		dialog.setTitle("Calculando...");
 		dialog.show();
 		this.actividad = actividad;
 	}
@@ -51,8 +51,6 @@ public class ParseadorXML extends AsyncTask<Void, Integer, Void> {
 
 			if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
-				publishProgress(new Integer[] { 20 });
-
 				final InputStream in = httpURLConnection.getInputStream();
 				final DocumentBuilderFactory dbf = DocumentBuilderFactory
 						.newInstance();
@@ -61,21 +59,13 @@ public class ParseadorXML extends AsyncTask<Void, Integer, Void> {
 
 				final Document documento = documentBuilder.parse(in);
 
-				publishProgress(new Integer[] { 30 });
-
 				final Element elementos = documento.getDocumentElement();
-
-				int valor = 40;
-				publishProgress(new Integer[] { valor });
 
 				final NodeList nodos = elementos.getElementsByTagName("title");
 				if (nodos != null && nodos.getLength() > 0) {
 					for (int i = 0; i < nodos.getLength(); i++) {
 						final Element entry = (Element) nodos.item(i);
 						titulos.add(entry.getFirstChild().getTextContent());
-
-						valor += 5;
-						publishProgress(new Integer[] { valor });
 					}
 				}
 			}
@@ -90,11 +80,6 @@ public class ParseadorXML extends AsyncTask<Void, Integer, Void> {
 			Log.e(PARSEADOR_XML, "Error de parseo");
 		}
 		return null;
-	}
-
-	@Override
-	protected void onProgressUpdate(final Integer... valores) {
-		dialog.setProgress(valores[0]);
 	}
 
 	@Override
