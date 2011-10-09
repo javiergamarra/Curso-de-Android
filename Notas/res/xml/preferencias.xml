@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Traductor de Google">
+		<CheckBoxPreference android:key="PREF_TRADUCTOR_ACTIVADO"
+			android:title="Conectar con traductor" android:summary="Muestra la opción traducir en cada nota"
+			android:defaultValue="true" />
+		<ListPreference android:key="PREF_TRADUCTOR_IDIOMAS"
+			android:title="Idioma a traducir" android:defaultValue="1"
+			android:summary="Selecciona el idioma a partir del cual traducirá las notas"
+			android:entries="@array/idiomas" android:entryValues="@array/idiomasValores" />
+	</PreferenceCategory>
+</PreferenceScreen>

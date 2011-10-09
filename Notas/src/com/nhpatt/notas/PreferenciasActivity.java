@@ -1,14 +1,13 @@
 package com.nhpatt.notas;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 
-public class PreferenciasActivity extends Activity {
+public class PreferenciasActivity extends PreferenceActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.preferencias);
+		addPreferencesFromResource(R.xml.preferencias);
 	}
-
 }

@@ -108,6 +108,13 @@ public class NotasActivity extends ListActivity {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		final MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.contextmenu, menu);
+
+		final SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		if (!preferences.getBoolean("PREF_TRADUCTOR_ACTIVADO", true)) {
+			menu.findItem(R.id.traducirNota).setVisible(false);
+		}
+
 	}
 
 	@Override
@@ -127,8 +134,12 @@ public class NotasActivity extends ListActivity {
 		final Nota nota = recuperarNotaDeLaLista(item);
 		// TODO Esto se debería hacer en un hilo o en una tarea asíncrona (se
 		// introducen más adelante)
+
+		final SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 		final String descripcionTraducida = TraductorGoogle.traducir(
-				nota.getDescripcion(), "ES", "EN");
+				nota.getDescripcion(), "ES",
+				preferences.getString("PREF_TRADUCTOR_IDIOMAS", "EN"));
 		Toast.makeText(this, descripcionTraducida, Toast.LENGTH_SHORT).show();
 	}
 

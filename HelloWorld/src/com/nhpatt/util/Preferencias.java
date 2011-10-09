@@ -15,7 +15,7 @@ public class Preferencias extends PreferenceActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		SharedPreferences preferences = PreferenceManager
+		final SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		Toast.makeText(
 				this,
