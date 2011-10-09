@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Notas</string>
-	<string name="bienvenida">Bienvenido!</string>
+	<string name="bienvenida">Notas disponibles:</string>
 	<string name="insertarNota">Inserta una nueva nota: </string>
 	<string name="nuevaNota">Añadir Nueva Nota</string>
 	<string name="conocerMas">Conocer Más</string>

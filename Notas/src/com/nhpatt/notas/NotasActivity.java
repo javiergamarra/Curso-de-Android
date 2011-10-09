@@ -17,27 +17,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nhpatt.modelos.Nota;
+import com.nhpatt.util.NotaAdapter;
 
 public class NotasActivity extends ListActivity {
 
 	private static final String URL_PRUEBA = "http://www.nhpatt.com";
 	private static final int ACTIVIDAD_NUEVA_NOTA = 0;
 	private final List<Nota> notas = new ArrayList<Nota>();
-	private ArrayAdapter<Nota> arrayAdapter;
+	private NotaAdapter notaAdapter;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		arrayAdapter = new ArrayAdapter<Nota>(this,
-				android.R.layout.simple_list_item_1, notas);
-		setListAdapter(arrayAdapter);
+		notaAdapter = new NotaAdapter(this, R.layout.filanota, notas);
+		setListAdapter(notaAdapter);
 
 		final ListView lista = (ListView) findViewById(android.R.id.list);
 		registerForContextMenu(lista);
@@ -101,7 +100,7 @@ public class NotasActivity extends ListActivity {
 		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		notas.remove(getListAdapter().getItem(info.position));
-		arrayAdapter.notifyDataSetChanged();
+		notaAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -114,7 +113,7 @@ public class NotasActivity extends ListActivity {
 				final Nota nota = (Nota) data
 						.getSerializableExtra(InsertarNotaActivity.NOTA);
 				notas.add(nota);
-				arrayAdapter.notifyDataSetChanged();
+				notaAdapter.notifyDataSetChanged();
 				Toast.makeText(this, "Nota insertada: " + nota.toString(),
 						Toast.LENGTH_SHORT).show();
 			}
