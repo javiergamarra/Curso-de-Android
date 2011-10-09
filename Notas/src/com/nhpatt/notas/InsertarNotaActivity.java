@@ -14,6 +14,7 @@ import com.nhpatt.modelos.Nota;
 
 public class InsertarNotaActivity extends Activity implements OnClickListener {
 
+	private static final String NOTA_ACTUAL = "NOTA_ACTUAL";
 	public static final String ULTIMA_NOTA = "ULTIMA_NOTA";
 	public static final String NOTA = "NOTA";
 
@@ -40,5 +41,20 @@ public class InsertarNotaActivity extends Activity implements OnClickListener {
 		editor.commit();
 
 		finish();
+	}
+
+	@Override
+	protected void onSaveInstanceState(final Bundle outState) {
+		outState.putString(NOTA_ACTUAL,
+				((EditText) findViewById(R.id.campoNuevaNota)).getText()
+						.toString());
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+		final String textoNota = savedInstanceState.getString(NOTA_ACTUAL);
+		((EditText) findViewById(R.id.campoNuevaNota)).setText(textoNota);
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 }

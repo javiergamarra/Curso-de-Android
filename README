@@ -31,3 +31,4 @@ Una vez preparado el entorno
 26 - Ejemplo de test unitario y de integración
 27 - Utilizar SharedPreferences
 28 - Implementar una pantalla de Preferencias
+29 - Recuperar el texto insertado en caso de que la aplicación muera
