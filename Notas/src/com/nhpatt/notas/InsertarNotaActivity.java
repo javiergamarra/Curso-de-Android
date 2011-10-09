@@ -2,7 +2,9 @@ package com.nhpatt.notas;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import com.nhpatt.modelos.Nota;
 
 public class InsertarNotaActivity extends Activity implements OnClickListener {
 
+	public static final String ULTIMA_NOTA = "ULTIMA_NOTA";
 	public static final String NOTA = "NOTA";
 
 	@Override
@@ -26,8 +29,16 @@ public class InsertarNotaActivity extends Activity implements OnClickListener {
 	public void onClick(final View v) {
 		final EditText campoNota = (EditText) findViewById(R.id.campoNuevaNota);
 		final Intent intent = new Intent();
-		intent.putExtra(NOTA, new Nota(campoNota.getText().toString()));
+		final Nota nota = new Nota(campoNota.getText().toString());
+		intent.putExtra(NOTA, nota);
 		setResult(Activity.RESULT_OK, intent);
+
+		final SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		final SharedPreferences.Editor editor = preferences.edit();
+		editor.putString(ULTIMA_NOTA, nota.getDescripcion());
+		editor.commit();
+
 		finish();
 	}
 }

@@ -8,8 +8,10 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -43,6 +45,20 @@ public class NotasActivity extends ListActivity {
 		final ListView lista = (ListView) findViewById(android.R.id.list);
 		registerForContextMenu(lista);
 
+		mostrarUltimaNotaInsertada();
+
+	}
+
+	private void mostrarUltimaNotaInsertada() {
+		final SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		final String ultimaNotaInsertada = preferences.getString(
+				InsertarNotaActivity.ULTIMA_NOTA, "");
+		if (!"".equals(ultimaNotaInsertada)) {
+			Toast.makeText(this,
+					"Última nota insertada: " + ultimaNotaInsertada,
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
