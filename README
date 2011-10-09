@@ -36,3 +36,4 @@ Una vez preparado el entorno
 31 - Sustituir nuestro adapter por un cursor adapter
 32 - Implementar una AsyncTask
 33 - Implementar un tarea con threads
+34 - Ejemplo de notificaciones

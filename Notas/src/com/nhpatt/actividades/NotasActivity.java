@@ -5,6 +5,10 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,8 +28,8 @@ import android.widget.SimpleCursorAdapter;
 
 import com.nhpatt.database.NotaDataBase;
 import com.nhpatt.modelos.Nota;
-import com.nhpatt.ws.CalculoTraduccion;
 import com.nhpatt.ws.ParseadorXML;
+import com.nhpatt.ws.TraductorGoogle;
 
 public class NotasActivity extends ListActivity {
 
@@ -78,9 +82,6 @@ public class NotasActivity extends ListActivity {
 					PreferenciasActivity.class);
 			startActivity(actividadPreferencias);
 			return true;
-		case R.id.menuSalir:
-			finish();
-			return true;
 		case R.id.menuNuevaNota:
 			final Intent actividadNuevaNota = new Intent(this,
 					InsertarNotaActivity.class);
@@ -88,6 +89,9 @@ public class NotasActivity extends ListActivity {
 			return true;
 		case R.id.menuProcesarBlog:
 			new ParseadorXML(this).execute();
+			return true;
+		case R.id.menuSalir:
+			finish();
 			return true;
 		}
 
@@ -106,7 +110,6 @@ public class NotasActivity extends ListActivity {
 		if (!preferences.getBoolean("PREF_TRADUCTOR_ACTIVADO", true)) {
 			menu.findItem(R.id.traducirNota).setVisible(false);
 		}
-
 	}
 
 	@Override
@@ -122,14 +125,40 @@ public class NotasActivity extends ListActivity {
 		return false;
 	}
 
-	private void traducirNota(final MenuItem item) {
-		new CalculoTraduccion(this, recuperarNotaDeLaLista(item));
-	}
-
 	private void eliminarNota(final MenuItem item) {
 		final Nota nota = recuperarNotaDeLaLista(item);
 		dataBase.eliminarNota(nota.getId());
 		cursor.requery();
+	}
+
+	private void traducirNota(final MenuItem item) {
+		final SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		final String descripcionTraducida = TraductorGoogle.traducir(
+				recuperarNotaDeLaLista(item).getDescripcion(), "ES",
+				preferences.getString("PREF_TRADUCTOR_IDIOMAS", "EN"));
+		notificar(descripcionTraducida);
+	}
+
+	private void notificar(final String descripcionTraducida) {
+		final int icon = R.drawable.icon;
+		final String tickerText = "Nueva Nota traducida!";
+		final long when = System.currentTimeMillis();
+		final Notification notification = new Notification(icon, tickerText,
+				when);
+
+		final Intent intent = new Intent(this, NotasActivity.class);
+		final PendingIntent launchIntent = PendingIntent.getActivity(
+				getApplicationContext(), 0, intent, 0);
+
+		notification.flags = notification.flags | Notification.DEFAULT_VIBRATE;
+
+		notification.setLatestEventInfo(getApplicationContext(),
+				"Nueva Nota traducida!", descripcionTraducida, launchIntent);
+
+		final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify(1, notification);
+
 	}
 
 	private Nota recuperarNotaDeLaLista(final MenuItem item) {
@@ -152,11 +181,9 @@ public class NotasActivity extends ListActivity {
 				dataBase.insertar(nota);
 			}
 			break;
-
 		default:
 			break;
 		}
-
 	}
 
 	@Override
