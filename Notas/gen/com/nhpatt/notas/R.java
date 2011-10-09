@@ -17,18 +17,19 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
+        public static final int bienvenida=0x7f080002;
         public static final int bottomText=0x7f080001;
-        public static final int campoNuevaNota=0x7f080003;
-        public static final int eliminarNota=0x7f080006;
-        public static final int menuConocerMas=0x7f080008;
-        public static final int menuNuevaNota=0x7f080007;
-        public static final int menuPreferencias=0x7f080009;
-        public static final int menuProcesarBlog=0x7f08000a;
-        public static final int menuSalir=0x7f08000b;
-        public static final int nuevaNota=0x7f080004;
-        public static final int textoInsertarNota=0x7f080002;
+        public static final int campoNuevaNota=0x7f080004;
+        public static final int eliminarNota=0x7f080007;
+        public static final int menuConocerMas=0x7f080009;
+        public static final int menuNuevaNota=0x7f080008;
+        public static final int menuPreferencias=0x7f08000a;
+        public static final int menuProcesarBlog=0x7f08000b;
+        public static final int menuSalir=0x7f08000c;
+        public static final int nuevaNota=0x7f080005;
+        public static final int textoInsertarNota=0x7f080003;
         public static final int topText=0x7f080000;
-        public static final int traducirNota=0x7f080005;
+        public static final int traducirNota=0x7f080006;
     }
     public static final class layout {
         public static final int filanota=0x7f030000;
