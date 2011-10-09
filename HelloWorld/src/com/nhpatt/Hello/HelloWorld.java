@@ -69,16 +69,16 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 						R.id.topText, R.id.bottomText });
 		setListAdapter(adapter);
 
-		ListView lista = (ListView) findViewById(android.R.id.list);
+		final ListView lista = (ListView) findViewById(android.R.id.list);
 		registerForContextMenu(lista);
 
 		Log.d(APPLICATION_TAG, "Creating activity...");
 	}
 
 	private void guardarValorURL() {
-		SharedPreferences preferences = PreferenceManager
+		final SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
-		SharedPreferences.Editor editor = preferences.edit();
+		final SharedPreferences.Editor editor = preferences.edit();
 		editor.putString(VALOR_URL, "www.google.es");
 		editor.commit();
 	}
@@ -88,7 +88,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.incluirNota:
 			final TextView text = (TextView) findViewById(R.id.textoNota);
-			Nota nota = new Nota(text.getText().toString());
+			final Nota nota = new Nota(text.getText().toString());
 			dataBase.insertar(nota);
 			cursor.requery();
 			Toast.makeText(this, "Añadida la nota: " + nota, Toast.LENGTH_LONG)
@@ -103,9 +103,9 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	}
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id) {
-		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+	public void onListItemClick(final ListView listView, final View view,
+			final int position, final long id) {
+		final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("Descripción de nota");
 
 		dialog.setMessage(cursor.getString(cursor
@@ -113,30 +113,31 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		dialog.setNegativeButton(android.R.string.cancel,
 				new DialogInterface.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
+					public void onClick(final DialogInterface dialog,
+							final int which) {
 					}
 				});
 		dialog.show();
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Menu.FIRST, 0, "Sobre Lex Nova");
-		menu.add(0, (Menu.FIRST) + 1, 0, "Preferencias");
-		menu.add(0, (Menu.FIRST) + 2, 0, "XML");
-		menu.add(0, (Menu.FIRST) + 3, 0, "Browser");
-		menu.add(0, (Menu.FIRST) + 4, 0, "Notificaciones");
-		menu.add(0, (Menu.FIRST) + 5, 0, "Servicio 1");
-		menu.add(0, (Menu.FIRST) + 6, 0, "Parar Servicio 1");
-		menu.add(0, (Menu.FIRST) + 7, 0, "Servicio 2");
-		menu.add(0, (Menu.FIRST) + 8, 0, "Parar Servicio 2");
-		menu.add(0, (Menu.FIRST) + 9, 0, "Content Provider");
+		menu.add(0, Menu.FIRST + 1, 0, "Preferencias");
+		menu.add(0, Menu.FIRST + 2, 0, "XML");
+		menu.add(0, Menu.FIRST + 3, 0, "Browser");
+		menu.add(0, Menu.FIRST + 4, 0, "Notificaciones");
+		menu.add(0, Menu.FIRST + 5, 0, "Servicio 1");
+		menu.add(0, Menu.FIRST + 6, 0, "Parar Servicio 1");
+		menu.add(0, Menu.FIRST + 7, 0, "Servicio 2");
+		menu.add(0, Menu.FIRST + 8, 0, "Parar Servicio 2");
+		menu.add(0, Menu.FIRST + 9, 0, "Content Provider");
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 		Intent intent;
 		switch (item.getItemId()) {
@@ -150,7 +151,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			startActivity(intent);
 			return true;
 		case Menu.FIRST + 2:
-			ParseadorXML parseadorXML = new ParseadorXML();
+			final ParseadorXML parseadorXML = new ParseadorXML();
 			parseadorXML.recogerValores();
 			return true;
 		case Menu.FIRST + 3:
@@ -158,10 +159,10 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			startActivity(intent);
 			return true;
 		case Menu.FIRST + 4:
-			Notification notification = new Notification(R.drawable.icon,
+			final Notification notification = new Notification(R.drawable.icon,
 					"Notification corta", System.currentTimeMillis());
 			intent = new Intent(this, Preferencias.class);
-			PendingIntent launchIntent = PendingIntent.getActivity(
+			final PendingIntent launchIntent = PendingIntent.getActivity(
 					getApplicationContext(), 0, intent, 0);
 			notification.flags = notification.flags
 					| Notification.FLAG_ONGOING_EVENT
@@ -170,7 +171,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			notification.setLatestEventInfo(getApplicationContext(), "Titulo",
 					"Texto largo", launchIntent);
 
-			NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(1, notification);
 
 			return true;
@@ -187,8 +188,8 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 			stopService(new Intent(this, intentService.getClass()));
 			return true;
 		case Menu.FIRST + 9:
-			Cursor allRows = getContentResolver().query(MyProvider.CONTENT_URI,
-					null, null, null, null);
+			final Cursor allRows = getContentResolver().query(
+					MyProvider.CONTENT_URI, null, null, null, null);
 			Toast.makeText(this, String.valueOf(allRows.getCount()),
 					Toast.LENGTH_LONG).show();
 			return true;
@@ -200,8 +201,8 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	private ComponentName service;
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, final View v,
+			final ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, Menu.FIRST, 0, "Eliminar");
 		menu.add(0, Menu.FIRST + 1, 0, "Traducir");
@@ -209,7 +210,7 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public boolean onContextItemSelected(final MenuItem item) {
 		AdapterContextMenuInfo info;
 		Cursor cursor;
 		switch (item.getItemId()) {
@@ -261,11 +262,11 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		}
 
 		@Override
-		protected Integer doInBackground(String... urls) {
+		protected Integer doInBackground(final String... urls) {
 			for (int i = 0; i < 100; i++) {
 				try {
 					Thread.sleep(200);
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 				}
 
 				publishProgress(i / 100f);
@@ -274,13 +275,13 @@ public class HelloWorld extends ListActivity implements OnClickListener {
 		}
 
 		@Override
-		protected void onProgressUpdate(Float... valores) {
-			int p = Math.round(100 * valores[0]);
+		protected void onProgressUpdate(final Float... valores) {
+			final int p = Math.round(100 * valores[0]);
 			dialog.setProgress(p);
 		}
 
 		@Override
-		protected void onPostExecute(Integer bytes) {
+		protected void onPostExecute(final Integer bytes) {
 			dialog.dismiss();
 		}
 	}

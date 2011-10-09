@@ -9,6 +9,7 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,6 +23,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nhpatt.database.NotaDataBase;
 import com.nhpatt.modelos.Nota;
 import com.nhpatt.util.NotaAdapter;
 import com.nhpatt.ws.ParseadorXML;
@@ -33,11 +35,27 @@ public class NotasActivity extends ListActivity {
 	private static final int ACTIVIDAD_NUEVA_NOTA = 0;
 	private final List<Nota> notas = new ArrayList<Nota>();
 	private NotaAdapter notaAdapter;
+	private NotaDataBase dataBase;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		dataBase = new NotaDataBase(this);
+		dataBase.open();
+
+		Cursor cursor = dataBase.findAll();
+		cursor = dataBase.findAll();
+		startManagingCursor(cursor);
+
+		notas.clear();
+
+		if (cursor.moveToFirst()) {
+			do {
+				notas.add(dataBase.crearNotaDeCursor(cursor));
+			} while (cursor.moveToNext());
+		}
 
 		notaAdapter = new NotaAdapter(this, R.layout.filanota, notas);
 		setListAdapter(notaAdapter);
@@ -45,20 +63,6 @@ public class NotasActivity extends ListActivity {
 		final ListView lista = (ListView) findViewById(android.R.id.list);
 		registerForContextMenu(lista);
 
-		mostrarUltimaNotaInsertada();
-
-	}
-
-	private void mostrarUltimaNotaInsertada() {
-		final SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext());
-		final String ultimaNotaInsertada = preferences.getString(
-				InsertarNotaActivity.ULTIMA_NOTA, "");
-		if (!"".equals(ultimaNotaInsertada)) {
-			Toast.makeText(this,
-					"Última nota insertada: " + ultimaNotaInsertada,
-					Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	@Override
@@ -144,7 +148,9 @@ public class NotasActivity extends ListActivity {
 	}
 
 	private void eliminarNota(final MenuItem item) {
-		notas.remove(recuperarNotaDeLaLista(item));
+		final Nota nota = recuperarNotaDeLaLista(item);
+		notas.remove(nota);
+		dataBase.eliminarNota(nota.getId());
 		notaAdapter.notifyDataSetChanged();
 	}
 
@@ -164,6 +170,7 @@ public class NotasActivity extends ListActivity {
 			if (Activity.RESULT_OK == resultCode) {
 				final Nota nota = (Nota) data
 						.getSerializableExtra(InsertarNotaActivity.NOTA);
+				dataBase.insertar(nota);
 				notas.add(nota);
 				notaAdapter.notifyDataSetChanged();
 				Toast.makeText(this, "Nota insertada: " + nota.toString(),
@@ -193,5 +200,11 @@ public class NotasActivity extends ListActivity {
 					}
 				});
 		alertDialog.show();
+	}
+
+	@Override
+	protected void onDestroy() {
+		dataBase.close();
+		super.onDestroy();
 	}
 }
