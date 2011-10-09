@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent" android:padding="10dip">
 	<TextView android:layout_height="wrap_content" android:id="@+id/insertarNota"
-		android:layout_width="fill_parent" android:text="@string/insertarNota" />
+		android:textColor="@color/green" android:layout_width="fill_parent"
+		android:text="@string/insertarNota" android:textSize="20dip" />
 	<Button android:layout_height="wrap_content" android:id="@+id/salir"
-		android:layout_width="fill_parent" android:text="@string/salir" />
+		android:drawableRight="@android:drawable/ic_input_add"
+		android:layout_width="fill_parent" android:text="@string/nuevaNota" />
 </LinearLayout>

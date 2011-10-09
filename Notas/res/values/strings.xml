@@ -2,6 +2,7 @@
 <resources>
 	<string name="app_name">Notas</string>
 	<string name="insertarNota">Inserta una nueva nota: </string>
+	<string name="nuevaNota">Añadir Nueva Nota</string>
 	<string name="notaInsertada">Nota insertada!</string>
 	<string name="salir">Salir</string>
 </resources>
