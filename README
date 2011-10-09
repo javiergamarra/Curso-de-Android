@@ -7,3 +7,4 @@ Una vez preparado el entorno
 2 - Crear una vista programáticamente, con un TextView y un Botón (alineación vertical, layout params...)
 3 - Utilizar el recurso strings.xml para almacenar los textos de nuestra aplicacion
 4 - Utilizar interfaces definidas en XML
+5 - Reaccionar a la pulsación del botón
