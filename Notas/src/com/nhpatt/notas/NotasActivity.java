@@ -6,6 +6,8 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 public class NotasActivity extends ListActivity implements OnClickListener {
 
+	private static final String URL_PRUEBA = "http://www.nhpatt.com";
 	private final List<String> notas = new ArrayList<String>();
 	private ArrayAdapter<String> arrayAdapter;
 
@@ -56,9 +59,14 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
-		Toast.makeText(this, "Ha seleccionado un menú", Toast.LENGTH_SHORT)
-				.show();
-		return true;
+		switch (item.getItemId()) {
+		case R.id.conocermas:
+			final Intent intentBrowser = new Intent(Intent.ACTION_VIEW,
+					Uri.parse(URL_PRUEBA));
+			startActivity(intentBrowser);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
