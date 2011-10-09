@@ -1,8 +1,5 @@
 package com.nhpatt.notas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -21,11 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.nhpatt.database.NotaDataBase;
 import com.nhpatt.modelos.Nota;
-import com.nhpatt.util.NotaAdapter;
 import com.nhpatt.ws.ParseadorXML;
 import com.nhpatt.ws.TraductorGoogle;
 
@@ -33,9 +30,10 @@ public class NotasActivity extends ListActivity {
 
 	private static final String URL_PRUEBA = "http://www.nhpatt.com";
 	private static final int ACTIVIDAD_NUEVA_NOTA = 0;
-	private final List<Nota> notas = new ArrayList<Nota>();
-	private NotaAdapter notaAdapter;
+
+	private SimpleCursorAdapter notaAdapter;
 	private NotaDataBase dataBase;
+	private Cursor cursor;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -45,19 +43,12 @@ public class NotasActivity extends ListActivity {
 		dataBase = new NotaDataBase(this);
 		dataBase.open();
 
-		Cursor cursor = dataBase.findAll();
 		cursor = dataBase.findAll();
 		startManagingCursor(cursor);
 
-		notas.clear();
-
-		if (cursor.moveToFirst()) {
-			do {
-				notas.add(dataBase.crearNotaDeCursor(cursor));
-			} while (cursor.moveToNext());
-		}
-
-		notaAdapter = new NotaAdapter(this, R.layout.filanota, notas);
+		notaAdapter = new SimpleCursorAdapter(this, R.layout.filanota, cursor,
+				new String[] { NotaDataBase.DESCRIPCION, NotaDataBase.FECHA },
+				new int[] { R.id.topText, R.id.bottomText });
 		setListAdapter(notaAdapter);
 
 		final ListView lista = (ListView) findViewById(android.R.id.list);
@@ -97,9 +88,9 @@ public class NotasActivity extends ListActivity {
 		case R.id.menuProcesarBlog:
 			// FIXME Otro candidato a tarea a hilo
 			for (final String titulo : ParseadorXML.recogerTitulosBlog()) {
-				notas.add(new Nota(titulo));
+				dataBase.insertar(new Nota(titulo));
 			}
-			notaAdapter.notifyDataSetChanged();
+			cursor.requery();
 			return true;
 		}
 
@@ -149,15 +140,15 @@ public class NotasActivity extends ListActivity {
 
 	private void eliminarNota(final MenuItem item) {
 		final Nota nota = recuperarNotaDeLaLista(item);
-		notas.remove(nota);
 		dataBase.eliminarNota(nota.getId());
-		notaAdapter.notifyDataSetChanged();
+		cursor.requery();
 	}
 
 	private Nota recuperarNotaDeLaLista(final MenuItem item) {
 		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
-		final Nota nota = (Nota) getListAdapter().getItem(info.position);
+		final Nota nota = dataBase.crearNotaDeCursor((Cursor) getListAdapter()
+				.getItem(info.position));
 		return nota;
 	}
 
@@ -171,10 +162,6 @@ public class NotasActivity extends ListActivity {
 				final Nota nota = (Nota) data
 						.getSerializableExtra(InsertarNotaActivity.NOTA);
 				dataBase.insertar(nota);
-				notas.add(nota);
-				notaAdapter.notifyDataSetChanged();
-				Toast.makeText(this, "Nota insertada: " + nota.toString(),
-						Toast.LENGTH_SHORT).show();
 			}
 			break;
 
@@ -188,11 +175,15 @@ public class NotasActivity extends ListActivity {
 	protected void onListItemClick(final ListView l, final View v,
 			final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
+
+		final Nota nota = dataBase.crearNotaDeCursor((Cursor) getListAdapter()
+				.getItem(position));
+
 		final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 		alertDialog.setCancelable(true);
 		alertDialog.setTitle("Nota seleccionada");
 
-		alertDialog.setMessage(l.getAdapter().getItem(position).toString());
+		alertDialog.setMessage(nota.getDescripcion());
 		alertDialog.setNeutralButton(android.R.string.cancel,
 				new DialogInterface.OnClickListener() {
 					public void onClick(final DialogInterface dialog,
