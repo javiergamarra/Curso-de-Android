@@ -13,10 +13,10 @@ public class NotasActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		final Button button = new Button(this);
-		button.setText("Salir");
+		button.setText(R.string.salir);
 
 		final TextView textView = new TextView(this);
-		textView.setText("Inserta una nueva nota");
+		textView.setText(R.string.insertarNota);
 
 		final LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
