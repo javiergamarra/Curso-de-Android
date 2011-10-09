@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.nhpatt.modelos.Nota;
 import com.nhpatt.util.NotaAdapter;
+import com.nhpatt.util.TraductorGoogle;
 
 public class NotasActivity extends ListActivity {
 
@@ -89,18 +90,33 @@ public class NotasActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case R.id.eliminarNota:
 			eliminarNota(item);
-			break;
-		default:
-			break;
+			return true;
+		case R.id.traducirNota:
+			traducirNota(item);
+			return true;
 		}
-		return true;
+		return false;
+	}
+
+	private void traducirNota(final MenuItem item) {
+		final Nota nota = recuperarNotaDeLaLista(item);
+		// TODO Esto se debería hacer en un hilo o en una tarea asíncrona (se
+		// introducen más adelante)
+		final String descripcionTraducida = TraductorGoogle.traducir(
+				nota.getDescripcion(), "ES", "EN");
+		Toast.makeText(this, descripcionTraducida, Toast.LENGTH_SHORT).show();
 	}
 
 	private void eliminarNota(final MenuItem item) {
+		notas.remove(recuperarNotaDeLaLista(item));
+		notaAdapter.notifyDataSetChanged();
+	}
+
+	private Nota recuperarNotaDeLaLista(final MenuItem item) {
 		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
-		notas.remove(getListAdapter().getItem(info.position));
-		notaAdapter.notifyDataSetChanged();
+		final Nota nota = (Nota) getListAdapter().getItem(info.position);
+		return nota;
 	}
 
 	@Override

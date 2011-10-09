@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/traducirNota" android:title="@string/traducirNota" />
 	<item android:id="@+id/eliminarNota" android:title="@string/eliminarNota" />
 </menu>
