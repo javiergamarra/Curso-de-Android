@@ -7,10 +7,13 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 public class NotasActivity extends ListActivity implements OnClickListener {
 
 	private static final int ConocerMas = 0;
+	private static final int ELIMINAR_NOTA = 0;
 	private final List<String> notas = new ArrayList<String>();
 	private ArrayAdapter<String> arrayAdapter;
 
@@ -38,6 +42,9 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 		button = (Button) findViewById(R.id.salir);
 		button.setOnClickListener(this);
 
+		final ListView lista = (ListView) findViewById(android.R.id.list);
+		registerForContextMenu(lista);
+
 	}
 
 	@Override
@@ -55,6 +62,32 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 		Toast.makeText(this, "Ha seleccionado un menú", Toast.LENGTH_SHORT)
 				.show();
 		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(final ContextMenu menu, final View v,
+			final ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, ELIMINAR_NOTA, Menu.FIRST, R.string.eliminarNota);
+	}
+
+	@Override
+	public boolean onContextItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case ELIMINAR_NOTA:
+			eliminarNota(item);
+			break;
+		default:
+			break;
+		}
+		return true;
+	}
+
+	private void eliminarNota(final MenuItem item) {
+		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		notas.remove(getListAdapter().getItem(info.position));
+		arrayAdapter.notifyDataSetChanged();
 	}
 
 	public void onClick(final View v) {
