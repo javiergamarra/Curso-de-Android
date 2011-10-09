@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/conocermas" android:title="@string/conocerMas"
+	<item android:id="@+id/menuNuevaNota" android:title="@string/nuevaNota"
+		android:icon="@android:drawable/ic_menu_add" />
+	<item android:id="@+id/menuConocerMas" android:title="@string/conocerMas"
 		android:numericShortcut="2" android:alphabeticShortcut="b"
 		android:icon="@android:drawable/ic_menu_info_details" />
-	<item android:id="@+id/preferencias" android:title="@string/preferencias"
-		android:icon="@android:drawable/ic_menu_help" />
+	<item android:id="@+id/menuPreferencias" android:title="@string/preferencias"
+		android:icon="@android:drawable/ic_menu_manage" />
+	<item android:id="@+id/menuSalir" android:title="@string/salir"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel" />
 </menu>

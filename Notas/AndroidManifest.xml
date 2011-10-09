@@ -10,5 +10,6 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".PreferenciasActivity"></activity>
+		<activity android:name=".InsertarNotaActivity"></activity>
 	</application>
 </manifest>

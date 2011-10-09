@@ -3,6 +3,7 @@ package com.nhpatt.notas;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -15,17 +16,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class NotasActivity extends ListActivity implements OnClickListener {
+public class NotasActivity extends ListActivity {
 
 	private static final String URL_PRUEBA = "http://www.nhpatt.com";
+	private static final int ACTIVIDAD_NUEVA_NOTA = 0;
 	private final List<String> notas = new ArrayList<String>();
 	private ArrayAdapter<String> arrayAdapter;
 
@@ -37,12 +36,6 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 		arrayAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, notas);
 		setListAdapter(arrayAdapter);
-
-		Button button = (Button) findViewById(R.id.incluirNuevaNota);
-		button.setOnClickListener(this);
-
-		button = (Button) findViewById(R.id.salir);
-		button.setOnClickListener(this);
 
 		final ListView lista = (ListView) findViewById(android.R.id.list);
 		registerForContextMenu(lista);
@@ -60,15 +53,24 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.conocermas:
+		case R.id.menuConocerMas:
 			final Intent intentBrowser = new Intent(Intent.ACTION_VIEW,
 					Uri.parse(URL_PRUEBA));
 			startActivity(intentBrowser);
 			return true;
-		case R.id.preferencias:
+		case R.id.menuPreferencias:
 			final Intent actividadPreferencias = new Intent(this,
 					PreferenciasActivity.class);
 			startActivity(actividadPreferencias);
+			return true;
+		case R.id.menuSalir:
+			finish();
+			return true;
+		case R.id.menuNuevaNota:
+			final Intent actividadNuevaNota = new Intent(this,
+					InsertarNotaActivity.class);
+			startActivityForResult(actividadNuevaNota, ACTIVIDAD_NUEVA_NOTA);
+			return true;
 		}
 		return false;
 	}
@@ -100,26 +102,25 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 		arrayAdapter.notifyDataSetChanged();
 	}
 
-	public void onClick(final View v) {
-		switch (v.getId()) {
-		case R.id.salir:
-			finish();
+	@Override
+	protected void onActivityResult(final int requestCode,
+			final int resultCode, final Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case ACTIVIDAD_NUEVA_NOTA:
+			if (Activity.RESULT_OK == resultCode) {
+				final String textoNota = data.getData().toString();
+				notas.add(textoNota);
+				arrayAdapter.notifyDataSetChanged();
+				Toast.makeText(this, "Nota insertada: " + textoNota,
+						Toast.LENGTH_SHORT).show();
+			}
 			break;
-		case R.id.incluirNuevaNota:
-			incluirNuevaNota();
+
 		default:
 			break;
 		}
-	}
 
-	private void incluirNuevaNota() {
-		final EditText campoNuevaNota = (EditText) findViewById(R.id.nuevaNota);
-		final String textoNota = campoNuevaNota.getText().toString();
-		notas.add(textoNota);
-		arrayAdapter.notifyDataSetChanged();
-		Toast.makeText(this, "Nota insertada: " + textoNota, Toast.LENGTH_SHORT)
-				.show();
-		campoNuevaNota.setText("");
 	}
 
 	@Override
