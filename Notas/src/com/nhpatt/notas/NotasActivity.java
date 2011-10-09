@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class NotasActivity extends Activity implements OnClickListener {
@@ -12,10 +11,10 @@ public class NotasActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-
-		final Button button = (Button) findViewById(R.id.salir);
-		button.setOnClickListener(this);
+		setContentView(R.layout.nuevanota);
+		//
+		// final Button button = (Button) findViewById(R.id.salir);
+		// button.setOnClickListener(this);
 	}
 
 	public void onClick(final View v) {
