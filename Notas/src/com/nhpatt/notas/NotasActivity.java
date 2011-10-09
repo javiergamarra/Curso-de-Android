@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,8 +23,6 @@ import android.widget.Toast;
 
 public class NotasActivity extends ListActivity implements OnClickListener {
 
-	private static final int ConocerMas = 0;
-	private static final int ELIMINAR_NOTA = 0;
 	private final List<String> notas = new ArrayList<String>();
 	private ArrayAdapter<String> arrayAdapter;
 
@@ -50,10 +49,8 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		final MenuItem item = menu.add(0, ConocerMas, Menu.FIRST,
-				R.string.conocerMas);
-		item.setShortcut('b', '1');
-		item.setIcon(R.drawable.icon);
+		final MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.menu.menuprincipal, menu);
 		return true;
 	}
 
@@ -68,13 +65,14 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 	public void onCreateContextMenu(final ContextMenu menu, final View v,
 			final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add(0, ELIMINAR_NOTA, Menu.FIRST, R.string.eliminarNota);
+		final MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.contextmenu, menu);
 	}
 
 	@Override
 	public boolean onContextItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
-		case ELIMINAR_NOTA:
+		case R.id.eliminarNota:
 			eliminarNota(item);
 			break;
 		default:
