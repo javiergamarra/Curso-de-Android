@@ -109,7 +109,8 @@ public class NotasActivity extends ListActivity {
 		switch (requestCode) {
 		case ACTIVIDAD_NUEVA_NOTA:
 			if (Activity.RESULT_OK == resultCode) {
-				final String textoNota = data.getData().toString();
+				final String textoNota = data
+						.getStringExtra(InsertarNotaActivity.NOTA);
 				notas.add(textoNota);
 				arrayAdapter.notifyDataSetChanged();
 				Toast.makeText(this, "Nota insertada: " + textoNota,
