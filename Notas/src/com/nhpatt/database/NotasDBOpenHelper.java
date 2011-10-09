@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class NotasDBOpenHelper extends SQLiteOpenHelper {
 
 	public static final String BASE_DE_DATOS = "nota.db";
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 
 	private static final String CREAR_TABLA_NOTAS = "create table "
 			+ NotaDataBase.TABLA_NOTAS + " (" + ID

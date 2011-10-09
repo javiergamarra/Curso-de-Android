@@ -34,3 +34,4 @@ Una vez preparado el entorno
 29 - Recuperar el texto insertado en caso de que la aplicación muera
 30 - Insertar, eliminar y consultar de base de datos
 31 - Sustituir nuestro adapter por un cursor adapter
+32 - Implementar una AsyncTask

@@ -1,5 +1,7 @@
 package com.nhpatt.notas;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -86,11 +88,7 @@ public class NotasActivity extends ListActivity {
 			startActivityForResult(actividadNuevaNota, ACTIVIDAD_NUEVA_NOTA);
 			return true;
 		case R.id.menuProcesarBlog:
-			// FIXME Otro candidato a tarea a hilo
-			for (final String titulo : ParseadorXML.recogerTitulosBlog()) {
-				dataBase.insertar(new Nota(titulo));
-			}
-			cursor.requery();
+			new ParseadorXML(this, this).execute();
 			return true;
 		}
 
@@ -197,5 +195,12 @@ public class NotasActivity extends ListActivity {
 	protected void onDestroy() {
 		dataBase.close();
 		super.onDestroy();
+	}
+
+	public void insertarResultado(final List<String> titulos) {
+		for (final String titulo : titulos) {
+			dataBase.insertar(new Nota(titulo));
+		}
+		cursor.requery();
 	}
 }
