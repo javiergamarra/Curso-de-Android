@@ -2,15 +2,16 @@
 Ejercicios complementarios al curso de Android (30 horas)
 
 Una vez preparado el entorno
-0 - Crear un proyecto de prueba llamado 'Notas'
-1 - Loguear los cambios de estado de la actividad (Log.e)
-2 - Crear una vista programáticamente, con un TextView y un Botón (alineación vertical, layout params...)
-3 - Utilizar el recurso strings.xml para almacenar los textos de nuestra aplicacion
-4 - Utilizar interfaces definidas en XML
-5 - Reaccionar a la pulsación del botón
-6 - Formatear la pantalla, añadiendo color
-7 - Probar otro tipo de layouts
-8 - Crear un EditText y recuperar su valor al pulsar el botón
-9 - Crear un ListView y mostrar las notas insertadas
+ 0 - Crear un proyecto de prueba llamado 'Notas'
+ 1 - Loguear los cambios de estado de la actividad (Log.e)
+ 2 - Crear una vista programáticamente, con un TextView y un Botón (alineación vertical, layout params...)
+ 3 - Utilizar el recurso strings.xml para almacenar los textos de nuestra aplicacion
+ 4 - Utilizar interfaces definidas en XML
+ 5 - Reaccionar a la pulsación del botón
+ 6 - Formatear la pantalla, añadiendo color
+ 7 - Probar otro tipo de layouts
+ 8 - Crear un EditText y recuperar su valor al pulsar el botón
+ 9 - Crear un ListView y mostrar las notas insertadas
 10 - Incluir un Toast al 'guardar' una nota
 11 - Incluir un AlertDialog si pulsan un elemento de la lista
+12 - Crear un botón que llame a finish

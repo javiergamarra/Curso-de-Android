@@ -29,11 +29,26 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 				android.R.layout.simple_list_item_1, notas);
 		setListAdapter(arrayAdapter);
 
-		final Button button = (Button) findViewById(R.id.incluirNuevaNota);
+		Button button = (Button) findViewById(R.id.incluirNuevaNota);
+		button.setOnClickListener(this);
+
+		button = (Button) findViewById(R.id.salir);
 		button.setOnClickListener(this);
 	}
 
 	public void onClick(final View v) {
+		switch (v.getId()) {
+		case R.id.salir:
+			finish();
+			break;
+		case R.id.incluirNuevaNota:
+			incluirNuevaNota();
+		default:
+			break;
+		}
+	}
+
+	private void incluirNuevaNota() {
 		final EditText campoNuevaNota = (EditText) findViewById(R.id.nuevaNota);
 		final String textoNota = campoNuevaNota.getText().toString();
 		notas.add(textoNota);

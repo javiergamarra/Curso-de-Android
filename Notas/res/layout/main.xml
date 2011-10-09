@@ -7,9 +7,14 @@
 		android:text="@string/insertarNota" android:textSize="20dip" />
 	<EditText android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/nuevaNota" />
-	<Button android:layout_height="wrap_content" android:id="@+id/incluirNuevaNota"
-		android:drawableRight="@android:drawable/ic_input_add"
-		android:layout_width="fill_parent" android:text="@string/nuevaNota" />
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:layout_height="wrap_content" android:id="@+id/incluirNuevaNota"
+			android:drawableRight="@android:drawable/ic_input_add"
+			android:layout_width="wrap_content" android:text="@string/nuevaNota" />
+		<Button android:layout_height="wrap_content" android:id="@+id/salir"
+			android:layout_width="wrap_content" android:text="@string/salir" />
+	</LinearLayout>
 	<ListView android:id="@android:id/list" android:layout_height="fill_parent"
 		android:layout_width="fill_parent" />
 </LinearLayout>
