@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NotasActivity extends ListActivity implements OnClickListener {
 
@@ -31,8 +32,11 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 
 	public void onClick(final View v) {
 		final EditText campoNuevaNota = (EditText) findViewById(R.id.nuevaNota);
-		notas.add(campoNuevaNota.getText().toString());
+		final String textoNota = campoNuevaNota.getText().toString();
+		notas.add(textoNota);
 		arrayAdapter.notifyDataSetChanged();
+		Toast.makeText(this, "Nota insertada: " + textoNota, Toast.LENGTH_SHORT)
+				.show();
 		campoNuevaNota.setText("");
 	}
 }
