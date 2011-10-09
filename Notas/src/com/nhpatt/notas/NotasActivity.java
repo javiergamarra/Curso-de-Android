@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 public class NotasActivity extends ListActivity implements OnClickListener {
 
+	private static final int ConocerMas = 0;
 	private final List<String> notas = new ArrayList<String>();
 	private ArrayAdapter<String> arrayAdapter;
 
@@ -34,6 +37,17 @@ public class NotasActivity extends ListActivity implements OnClickListener {
 
 		button = (Button) findViewById(R.id.salir);
 		button.setOnClickListener(this);
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(final Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		final MenuItem item = menu
+				.add(0, ConocerMas, Menu.FIRST, "Conocer más");
+		item.setShortcut('b', '1');
+		item.setIcon(R.drawable.icon);
+		return true;
 	}
 
 	public void onClick(final View v) {

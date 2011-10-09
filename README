@@ -15,3 +15,4 @@ Una vez preparado el entorno
 10 - Incluir un Toast al 'guardar' una nota
 11 - Incluir un AlertDialog si pulsan un elemento de la lista
 12 - Crear un botón que llame a finish
+13 - Definir un menú principal
