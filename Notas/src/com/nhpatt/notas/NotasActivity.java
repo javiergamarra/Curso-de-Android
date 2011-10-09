@@ -2,46 +2,31 @@ package com.nhpatt.notas;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class NotasActivity extends Activity {
-	private static final String NOTAS_TAG = "Notas";
-
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-		Log.e(NOTAS_TAG, "Creando la actividad");
-	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-		Log.e(NOTAS_TAG, "Empezando la actividad");
-	}
+		final Button button = new Button(this);
+		button.setText("Salir");
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.e(NOTAS_TAG, "Resumiendo la actividad");
-	}
+		final TextView textView = new TextView(this);
+		textView.setText("Inserta una nueva nota");
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		Log.e(NOTAS_TAG, "Pausando la actividad");
-	}
+		final LinearLayout linearLayout = new LinearLayout(this);
+		linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
+		linearLayout.setOrientation(LinearLayout.VERTICAL);
+		linearLayout.addView(textView);
+		linearLayout.addView(button);
+		setContentView(linearLayout);
 
-	@Override
-	protected void onStop() {
-		super.onStop();
-		Log.e(NOTAS_TAG, "Parando la actividad");
-	}
+		// setContentView(R.layout.main);
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		Log.e(NOTAS_TAG, "Destruyendo la actividad");
 	}
-
 }
