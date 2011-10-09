@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
@@ -33,7 +32,6 @@ import com.nhpatt.ws.TraductorGoogle;
 
 public class NotasActivity extends ListActivity {
 
-	private static final String URL_PRUEBA = "http://www.nhpatt.com";
 	private static final int ACTIVIDAD_NUEVA_NOTA = 0;
 
 	private SimpleCursorAdapter notaAdapter;
@@ -73,8 +71,7 @@ public class NotasActivity extends ListActivity {
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menuConocerMas:
-			final Intent intentBrowser = new Intent(Intent.ACTION_VIEW,
-					Uri.parse(URL_PRUEBA));
+			final Intent intentBrowser = new Intent(this, Browser.class);
 			startActivity(intentBrowser);
 			return true;
 		case R.id.menuPreferencias:
