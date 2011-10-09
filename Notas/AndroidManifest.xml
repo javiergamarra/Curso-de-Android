@@ -14,6 +14,8 @@
 		<activity android:name=".PreferenciasActivity" />
 		<activity android:name=".InsertarNotaActivity" />
 		<activity android:name=".Browser" />
+		<service android:name=".Servicio" android:enabled="true" />
+		<service android:name=".IntentServicio" android:enabled="true" />
 	</application>
 	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>
